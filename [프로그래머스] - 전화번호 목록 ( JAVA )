@@ -1,0 +1,17 @@
+/*
+[ 풀이 ]
+
+문제에서 다른 번호의 "접두어"인 경우가 있는지를 확인하라고 하였다. 만약 배열 내에서 어떤 번호A가 다른 번호B의 접두어인 경우 그 배열을 
+사전순으로 정렬 시켰을 경우 배열 내에서 A 의 바로 뒤에 B가 위치할 것이다. 접두어인지 확인하기 위해 startsWith() 를 이용하였다. */
+
+// 코드
+import java.util.*;
+class Solution {
+    public boolean solution(String[] phone_book) {        
+        Arrays.sort( phone_book );			
+        for( int i = 0 ; i < phone_book.length - 1 ; i++ ){            
+            if( phone_book[i+1].startsWith(phone_book[i]) ) return false;                
+        }        
+        return true;
+    }
+}
