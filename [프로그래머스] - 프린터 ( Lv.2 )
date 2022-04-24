@@ -1,0 +1,24 @@
+import java.util.*;
+class Solution {
+    public int solution(int[] priorities, int location) { 
+        int answer = 0;
+        // 우선순위 큐를 이용해 인쇄순서를 정렬
+        PriorityQueue<Integer> priQueue = new PriorityQueue<>( Collections.reverseOrder() );
+        for( int i = 0 ; i < priorities.length ; i++ ){
+            priQueue.offer( priorities[i] );
+        }
+        while( !priQueue.isEmpty() ){
+         	 for( int i = 0 ; i < priorities.length; i++ ){
+           		if( priQueue.peek() == priorities[i] ){
+               		 if( i == location ){
+                    	answer++;
+                    	return answer;
+               		 }           
+               		 priQueue.poll();                   
+               		 answer++;
+           		}  
+          	}     
+        }                       
+        return answer;
+    }
+}
