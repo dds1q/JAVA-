@@ -1,0 +1,22 @@
+//https://programmers.co.kr/learn/courses/30/lessons/42747
+//https://ddsiq.tistory.com/40
+import java.util.*;
+class Solution {
+    public int solution(int[] citations) {
+        int answer = 0;       
+        int h = 0;
+        // citations를 오름차순 정렬
+        Arrays.sort( citations );        
+        while( h <= citations[citations.length - 1]){
+            int count_up = 0;            
+            for( int i = 0 ; i < citations.length ; i++ ){                
+                if( h <= citations[i] ) count_up++;                
+            }
+            if( count_up >= h ) {
+                if( answer < h ) answer = h;
+            }
+            h++;
+        }
+        return answer;
+    }
+}
