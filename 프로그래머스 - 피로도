@@ -1,0 +1,21 @@
+//https://programmers.co.kr/learn/courses/30/lessons/87946
+//https://ddsiq.tistory.com/41
+class Solution {
+    static int answer = 0;
+    public int solution(int k, int[][] dungeons) {        
+        boolean[] visited = new boolean[ dungeons.length ];       
+        perm( dungeons , visited , 0 , k );
+        return answer;
+    }
+    // 던전의 진행 순서를 뽑는( 조합 ) dfs 
+    static void perm( int[][] dungeons , boolean[] visited , int depth , int pirodo ){        
+        for( int i = 0 ; i < dungeons.length ; i++ ){
+            if( !visited[i] & pirodo >= dungeons[i][0]){
+                visited[i] = true;                
+                perm( dungeons , visited , depth + 1 , pirodo - dungeons[i][1]  );
+                visited[i] = false;                
+            }
+        }
+        if( answer < depth ) answer = depth;
+    }
+}
