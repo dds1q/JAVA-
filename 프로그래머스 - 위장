@@ -1,0 +1,55 @@
+//https://programmers.co.kr/learn/courses/30/lessons/42578
+//https://ddsiq.tistory.com/39
+import java.util.*;
+class Solution {
+    static int answer = 0;    
+    static Map<String,Integer> hm = new HashMap<>(); //의상의 종류와 그 의상의 가짓수를 저장
+    public int solution(String[][] clothes) {
+        boolean chk = false;
+        for( int i = 0 ; i < clothes.length ; i++ ){
+            if( !hm.containsKey( clothes[i][1] )){
+                hm.put( clothes[i][1] , 1 );
+            } else {
+                chk = true;
+                hm.put( clothes[i][1] , hm.get(clothes[i][1] ) + 1 );
+            }
+        }        
+        if( !chk ){ // 의상의 종류가 여러개고 종류당 의상의 가짓수가 1개인 경우
+            return (int)Math.pow( 2,clothes.length) - 1 ;
+        } else{
+            boolean[] visited = new boolean[hm.size()];
+            String[] clothes_case = new String[hm.size()];        
+            Iterator<String> it = hm.keySet().iterator();
+            for( int i = 0 ; i < hm.size() ; i++ ){
+                clothes_case[i] = it.next();
+            }
+            for( int i = 1 ; i < clothes_case.length + 1; i++ ){
+                comb( clothes_case , visited , 0 , i );
+            }  
+            return answer;
+        }      
+        
+    }
+    // 의상의 종류를 뽑는 조합 생성
+    static void comb ( String[] clothes_case,  boolean[] visited , int depth , int r ){
+        if( r == 0 ) {
+            output( clothes_case , visited );
+            return;
+        }
+        if( depth == clothes_case.length ) return;
+        else{
+            visited[depth] = true;
+            comb( clothes_case , visited , depth + 1 , r - 1);
+            visited[depth] = false;
+            comb( clothes_case , visited , depth + 1 , r );
+        }
+    }
+    // 뽑은 의상들의 종류에서 의상의 가짓수 끼리 곱한 뒤 answer에 더한다.
+    static void output( String[] clothes_case,  boolean[] visited ){
+        int a = 1;
+        for( int i = 0 ; i < clothes_case.length ; i++ ){
+            if( visited[i] ) a *= hm.get( clothes_case[i] ); 
+        }
+        answer += a;
+    }
+}
