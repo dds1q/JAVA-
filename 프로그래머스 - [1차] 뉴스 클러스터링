@@ -1,0 +1,55 @@
+//https://programmers.co.kr/learn/courses/30/lessons/17677
+//https://ddsiq.tistory.com/30
+import java.util.*;
+import java.util.regex.Pattern;
+class Solution {
+    public int solution(String str1, String str2) {        
+    	// 다중 집합 생성. 대문자, 소문자를 구분하지 않기 위해 아예 문장전체를
+        // 대문자로 다 바꿔버린 뒤 집합을 생성하였음.
+        String[] words1 = words( str1.toUpperCase() );
+        String[] words2 = words( str2.toUpperCase() );
+        // 두 집합이 모두 공집합일 경우
+        if( words1.length == 0 & words2.length == 0 ) return 65536;
+        else {
+        	//교집합 생성
+            String[] kyo1 = kyo( words1,words2 );     
+            
+            // 합집합의 개수를 구하는 부분
+            int hapN = words1.length ;
+            for( int i = 0 ; i < words2.length ; i++ ){
+                if( !words2[i].equals("") ) hapN++;
+            } 
+
+            return (int)((double)kyo1.length / ( hapN ) * 65536) ;  
+        }
+        
+    }
+    public String[] words ( String str ){
+        List<String> list = new ArrayList<>();
+        for( int i = 0 ; i < str.length() - 1 ; i++ ){
+            if( Pattern.matches(  "[a-zA-Z]*$", str.substring( i , i + 2 ) )) list.add( str.substring( i , i + 2 ) );            
+        }
+        String[] l = new String[list.size()];
+        for( int i = 0 ; i < list.size() ; i++ ){
+            l[i] = list.get(i);
+        }
+        return l;
+    }
+    public String[] kyo ( String[] words1 , String[] words2 ){
+        List<String> list = new ArrayList<>();
+        for( int i = 0 ; i < words1.length ; i++ ){
+            for( int j = 0 ; j < words2.length ; j++ ){
+                if( words1[i].equals( words2[j] )){
+                    words2[j] = "";
+                    list.add( words1[i] );
+                    break;
+                }                 
+            }
+        }
+        String[] l = new String[list.size()];
+        for( int i = 0 ; i < l.length ; i++ ){
+            l[i] = list.get(i);
+        }
+        return l;
+    }
+}
