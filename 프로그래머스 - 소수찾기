@@ -1,0 +1,43 @@
+//https://programmers.co.kr/learn/courses/30/lessons/42839
+//https://ddsiq.tistory.com/32
+
+import java.util.*;
+class Solution {
+    static Set<Integer> hs = new HashSet<>();
+    public int solution(String numbers) {       
+        char[] number = numbers.toCharArray();
+        char[] output = new char[ number.length ];
+        boolean[] visited = new boolean[ number.length ];         
+        for( int i = 1 ; i < number.length + 1 ; i++ ){                       
+            perm( number, output, visited, 0 , i );
+        }        return hs.size();
+    }
+    // 순열 생성
+    static void perm( char[] number , char[] output, boolean[] visited , int depth , int r ){
+        if( depth == r ){            
+            int num = Integer.parseInt( new String( output ).replace("\0" , "" ) );
+            if( sosu ( num ) ){
+                hs.add( num );                   
+            }
+            return;
+        }           
+        for( int i = 0 ; i < number.length ; i++ ){
+            if( !visited[i] ){
+                visited[i] = true;
+                output[depth] = number[i];
+                perm( number, output, visited, depth + 1 , r );
+                visited[i] = false;                
+            }
+        }
+    }
+    // 소수를 판별하는 함수
+    static boolean sosu( int num ){        
+        if( num < 2 ){
+            return false;
+        }
+        for( int i = 2 ; i <= Math.sqrt( num ) ; i++ ){
+            if( num % i == 0 ) return false;            
+        }
+        return true;
+    }
+}
