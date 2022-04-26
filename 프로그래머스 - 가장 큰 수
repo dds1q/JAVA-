@@ -1,0 +1,38 @@
+//https://programmers.co.kr/learn/courses/30/lessons/42746
+//https://ddsiq.tistory.com/33
+
+class Solution {  
+	static String answer = "";
+	public String solution(int[] numbers) {       
+        boolean[] visited = new boolean[ numbers.length ];
+        int[] output = new int[numbers.length];
+        perm( numbers , output, visited , 0 );
+        return answer;
+    }
+    // 재귀를 이용해 순열을 구하는 함수
+    static void perm( int[] numbers, int[] output , boolean[] visited , int depth ){
+        if( depth == numbers.length ){           	
+            if( Double.parseDouble( answer ) < Double.parseDouble( tostring( output ) ) ){
+                answer = tostring( output );
+            }
+            return;
+        }
+        for( int i = 0 ; i < numbers.length ; i++ ){
+            if( !visited[i] ){
+                visited[i] = true;
+                output[depth] = numbers[i];
+                perm( numbers , output , visited ,depth + 1 );
+                visited[i] = false;
+            }
+        }
+            
+    }
+    // 순열을 담은 배열을 문자로 변환
+    static String tostring( int[] output ){
+        String result = ""; 
+        for( int i = 0 ; i < output.length ; i++ ){
+            result += Integer.toString( output[i] );
+        }
+        return result;
+    }
+}
