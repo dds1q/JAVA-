@@ -1,0 +1,28 @@
+//https://programmers.co.kr/learn/courses/30/lessons/12899
+//https://ddsiq.tistory.com/27
+import java.util.*;
+class Solution {
+    public String solution(int n) {
+        String answer = "";
+        int[] nums = {1,2,4};
+        int cnt = 0;        
+        int x = 0;        
+        while ( n > x ){
+            cnt++;
+            x += (int)Math.pow( 3 , cnt );
+        }
+        if( cnt == 1 ){
+            answer = Integer.toString( nums[ n - 1 ] );
+        } else {
+            int a = n - ( x - (int)Math.pow( 3 , cnt ) ) - 1 ;
+            char[] words = Integer.toString( a , 3 ).toCharArray();
+            for( int i = 0 ; i < words.length ; i++ ){                
+                words[i] =  (char)(nums[(int)(words[i]-48)] + 48) ;                
+            }            
+            answer =  new String( new char[cnt - words.length] ).replace("\0" , "1") + new String( words );
+        }
+        System.out.print( cnt );
+       
+        return answer;
+    }
+}
