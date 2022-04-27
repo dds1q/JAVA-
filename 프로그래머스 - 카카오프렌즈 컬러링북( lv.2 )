@@ -1,0 +1,48 @@
+//https://programmers.co.kr/learn/courses/30/lessons/1829
+//https://ddsiq.tistory.com/25
+class Solution {
+    static int area = 0;    
+    static int[] move_x = {-1,1,0,0};
+    static int[] move_y = {0,0,-1,1};   
+    
+    
+    public static void dfs( int x , int y , long[][] picture , boolean[][] chk ){        
+        if( chk[x][y] ) return;
+        chk[x][y] = true;
+        area++;            
+        for( int i = 0 ; i < 4 ; i++ ){
+            int a = x + move_x[i];
+            int b = y + move_y[i];
+            if( a < 0 | a >= picture.length | b < 0 | b >= picture[0].length ) continue;
+            if( picture[x][y] == picture[a][b] & chk[a][b] == false ) dfs( a , b , picture, chk );           
+        }
+    }   
+    public int[] solution(int m, int n, int[][] picture) {
+        int numberOfArea = 0;        
+        int maxSizeOfOneArea = 0;
+        boolean[][] chk = new boolean[m][n];  
+        long[][] array = new long[m][n];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                array[i][j] = picture[i][j];
+            }
+        }
+        
+        for( int i = 0 ; i < m ; i++ ){
+            for( int j = 0 ; j < n ; j++ ){
+                 if( chk[i][j] == false & array[i][j] != 0 ){
+                    numberOfArea++;   
+                    dfs( i , j , array , chk);                                      
+                 }
+                if( maxSizeOfOneArea < area ) {
+                    maxSizeOfOneArea = area;                    
+                }
+                area = 0;    
+            }
+        }
+        int[] answer = new int[2];
+        answer[0] = numberOfArea;
+        answer[1] = maxSizeOfOneArea;
+        return answer;
+    }
+}
