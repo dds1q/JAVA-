@@ -1,0 +1,18 @@
+//https://programmers.co.kr/learn/courses/30/lessons/17687
+//https://ddsiq.tistory.com/43
+class Solution {
+    public String solution(int n, int t, int m, int p) {
+        StringBuilder sb = new StringBuilder();     
+        int num = 0;
+        int turn = 0; 
+        while( true ){
+            String l = Integer.toString( num , n );
+            for( int i = 0 ; i < l.length() ; i++ ){
+                if( turn % m == ( p - 1 ) ) sb.append( Character.toString( l.charAt(i) ).toUpperCase() );
+                if( sb.length() == t ) return sb.toString();  
+                turn++;
+            }
+            num++;
+        }
+    }
+}
