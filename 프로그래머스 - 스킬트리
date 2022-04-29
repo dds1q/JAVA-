@@ -1,0 +1,19 @@
+//https://programmers.co.kr/learn/courses/30/lessons/49993
+class Solution {
+    public int solution(String skill, String[] skill_trees) {
+        int answer = 0;
+        // 원하는 스킬들만을 추출할 수 있게 정규식 생성한다.
+        String skill_regexp = "[";
+        for( int i = 0 ; i < skill.length() ; i++ ){
+            skill_regexp += "^" + skill.substring( i , i + 1 );
+        } 
+        skill_regexp += "]";
+
+        for( int i = 0 ; i < skill_trees.length ; i++ ){
+            // 생성된 정규식을 이용해 원하지 않는 스킬들은 공백처리 시킨다.
+            skill_trees[i] = skill_trees[i].replaceAll( skill_regexp , "" );            
+            if( skill.indexOf( skill_trees[i] ) == 0 ) answer++; 
+        }
+        return answer;
+    }
+}
