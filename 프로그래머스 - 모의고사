@@ -1,0 +1,41 @@
+//https://programmers.co.kr/learn/courses/30/lessons/42840
+import java.util.Collections;
+import java.util.ArrayList;
+class Solution {
+    public int[] solution(int[] answers) {        
+        int[][] man = {{1, 2, 3, 4, 5} , {2, 1, 2, 3, 2, 4, 2, 5} , {3, 3, 1, 1, 2, 2, 4, 4, 5, 5}};
+
+        int[] idx = new int[3];
+        int[] score = new int[3];        
+        for( int i = 0 ; i < 3 ; i++ ){
+            for( int j = 0 ; j < answers.length ; j++ ){                
+                if( answers[j] == man[i][idx[i]] ){
+                  score[i]++;                   
+                }
+                idx[i]++;
+                if( idx[i] >= man[i].length ){              
+                    idx[i] = 0;
+                }               
+            }
+        }
+        int max = 0;
+        for( int i = 0 ; i < 3 ; i++ ){
+            if( max < score[i] ){
+                max = score[i];
+            }
+        }       
+        ArrayList<Integer> list = new ArrayList<>();
+        for( int i = 0 ; i < 3 ; i++ ){
+            if( score[i] == max ){
+                list.add( i + 1);
+            }
+        }     
+        Collections.sort( list );
+
+        int[] answer = new int[ list.size() ];
+        for( int i = 0 ; i < list.size() ; i++ ){
+            answer[i] = list.get(i);
+        }
+        return answer;
+    }
+}
