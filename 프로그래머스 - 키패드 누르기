@@ -1,0 +1,38 @@
+//https://programmers.co.kr/learn/courses/30/lessons/67256
+//https://ddsiq.tistory.com/19
+class Solution {
+    public String solution(int[] numbers, String hand) {
+        int left_now = 10;
+        int right_now = 12;
+        String answer = "";
+        for( int i = 0 ; i < numbers.length ; i++ ){
+            if( numbers[i] == 0 ){
+                numbers[i] = 11;
+            }
+            if( numbers[i] % 3 == 1 ){
+                answer += "L";
+                left_now = numbers[i];
+            } else if ( numbers[i] % 3 == 0 ){
+                answer += "R";
+                right_now = numbers[i];
+            } else {
+                int left =  Math.abs(left_now - numbers[i])  % 3 +  Math.abs(left_now - numbers[i] ) / 3;
+                int right = Math.abs(right_now - numbers[i])  % 3 + Math.abs(right_now - numbers[i] ) / 3;
+                if( left < right ){
+                    left_now = numbers[i];
+                    answer += "L";
+                } else if ( left > right ){
+                    right_now = numbers[i];
+                    answer += "R";                    
+                } else if ( hand.equals("left") ) {
+                    left_now = numbers[i];
+                    answer += "L";
+                } else {
+                   right_now = numbers[i];
+                   answer += "R"; 
+                }
+            }
+        }        
+        return answer;
+    }
+}
