@@ -1,0 +1,45 @@
+//https://ddsiq.tistory.com/46
+//https://programmers.co.kr/learn/courses/30/lessons/17686
+
+import java.util.*;
+import java.util.Map.Entry;
+class Solution {
+    public String[] solution(String[] files) {        
+        Map<String,List<String>> hm = new LinkedHashMap<>();
+        for( int i = 0 ; i < files.length ; i++ ){
+            List<String> list = new ArrayList<>();
+            int idx = -1;
+            for( int j = 0 ; j < files[i].length() ; j++ ){
+                if( files[i].charAt( j ) >= '0' & files[i].charAt( j ) <= '9' ) {
+                    list.add( files[i].substring( 0 , j ) );
+                    idx = j;
+                    break;
+                }
+            }
+            int idx2 = -1;
+            for( int j = idx ; j < files[i].length() ; j++ ){
+                if( files[i].charAt( j ) >= '0' & files[i].charAt( j ) <= '9' ) {
+                    idx2 = j;
+                } else break;
+            }    
+            list.add( files[i].substring( idx , idx2 + 1  ) );
+            hm.put( files[i] , list );
+        }
+        List<Entry<String,List<String>>> entry_list = new ArrayList<>( hm.entrySet() );
+        Collections.sort( entry_list , new Comparator<Entry<String,List<String>>>(){
+           @Override
+			public int compare(Entry<String, List<String>> o1, Entry<String, List<String>> o2) {
+                String o1_HEAD = o1.getValue().get(0).toUpperCase();
+                String o2_HEAD = o2.getValue().get(0).toUpperCase();
+				if( o1_HEAD.equals( o2_HEAD ) ) {
+                    return Integer.parseInt( o1.getValue().get(1) ) - Integer.parseInt( o2.getValue().get(1) );
+                } else return o1_HEAD.compareTo( o2_HEAD );				
+			} 
+        });
+        String[] answer = new String[ files.length ];
+        for( int i = 0 ; i < answer.length ; i++ ){
+            answer[i] = entry_list.get(i).getKey();
+        }        
+        return answer;
+    }
+}
