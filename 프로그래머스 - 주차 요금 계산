@@ -1,0 +1,44 @@
+//https://programmers.co.kr/learn/courses/30/lessons/92341
+//https://ddsiq.tistory.com/48
+import java.util.*;
+import java.util.Map.Entry;
+class Solution {
+    public int[] solution(int[] fees, String[] records) {
+        Map<String,String> records_map = new HashMap<>();
+        Map<String,Integer> acc = new HashMap<>();
+        for( int i = 0 ; i < records.length ; i++ ){
+            String[] words = records[i].split(" ");
+            if( words[2].equals("IN") ){
+                records_map.put( words[1] , words[0] );
+            } else {
+                int acc_time =  time_to_minute( words[0] ) - time_to_minute( records_map.get( words[1] ) ); 
+                records_map.remove(words[1]);
+                if( !acc.containsKey( words[1] ) ) acc.put( words[1] , acc_time );  
+                else acc.put( words[1] , acc.get( words[1] ) + acc_time );                              
+            }
+        }
+        if( !records_map.isEmpty() ){
+            for( String car : records_map.keySet() ){
+                int acc_time = 1439 - time_to_minute( records_map.get( car ) );
+                if( !acc.containsKey( car ) ) acc.put( car , acc_time );  
+                else acc.put( car , acc.get( car ) + acc_time );
+            }          
+            
+        }
+        for( String car : acc.keySet() ){
+            if( acc.get( car ) > fees[0] ) acc.put( car , fees[1] + (int)(Math.ceil(((double)acc.get( car ) - fees[0]) / fees[2] ) * fees[3] ) ) ;
+            else acc.put( car , fees[1] );            
+        }
+        Object[] key_sort = acc.keySet().toArray();
+        Arrays.sort( key_sort );
+        int[] answer = new int[ acc.size() ];
+        for( int i = 0 ; i < answer.length ; i++ ){
+            answer[i] = acc.get( key_sort[i] );
+        }
+        return answer;
+    }
+    // 분 단위로 변환해주는 함수
+    static int time_to_minute( String time ){
+       return Integer.parseInt( time.substring( 0, 2 ) ) * 60 + Integer.parseInt( time.substring( 3, 5 ) );
+    }
+}
