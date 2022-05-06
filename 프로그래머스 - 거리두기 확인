@@ -1,0 +1,55 @@
+//https://programmers.co.kr/learn/courses/30/lessons/81302
+//https://ddsiq.tistory.com/49
+import java.util.*;
+class Solution {
+    int[] dx = {0,1,0,-1};
+    int[] dy = {-1,0,1,0};
+    public int[] solution(String[][] places) {
+        int[] answer = new int[places.length];
+        for( int i = 0 ; i < places.length ; i++ ){
+            answer[i] = chk( places[i] );
+        }        
+        return answer;
+    }
+    public boolean bfs( String[] room , int x , int y ){
+        Queue<Node> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[room.length][room.length];
+        queue.offer( new Node( x , y ) );
+        visited[x][y] = true;
+        while( !queue.isEmpty() ){
+            Node current = queue.poll();
+            for( int i = 0 ; i < 4 ; i++ ){
+                int nx = current.x + dx[i];
+                int ny = current.y + dy[i];
+                int manhattan = Math.abs( x - nx ) + Math.abs( y - ny );
+                
+                if( nx < 0 | ny < 0 | nx >= room.length | ny >= room.length ) continue;
+                if( manhattan > 2 | visited[nx][ny] ) continue;
+                visited[nx][ny] = true;
+                
+                if( room[nx].charAt(ny) == 'X' )continue;
+                else if( room[nx].charAt(ny) == 'P' ) return false;
+                else queue.offer( new Node( nx , ny ) );                
+            }            
+        }
+        return true;
+    }
+    public int chk( String[] room ){
+        for( int i = 0 ; i < room.length ; i++ ){
+            for( int j = 0 ; j < room[i].length() ; j++ ){
+                if( room[i].charAt( j ) == 'P' ){
+                    if( !bfs( room , i , j ) ) return 0;
+                }
+            }
+        }
+        return 1;
+    }
+    public class Node{
+        int x;
+        int y;
+        public Node( int x , int y ){
+            this.x = x;
+            this.y = y;
+        }
+    }
+}
