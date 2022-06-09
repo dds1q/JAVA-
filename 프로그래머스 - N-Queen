@@ -1,0 +1,27 @@
+class Solution {
+    static boolean[][] Qpoint;
+    static int count = 0;
+    public int solution(int n) {
+        int answer = 0;
+        Qpoint = new boolean[n][n];
+        comb( 0, n , n );
+        System.out.println( count );
+        return answer;
+    }
+    static void comb( int start , int n , int r ){
+        if( r == 0 ){            
+            count++;         
+            return;
+        }
+        if( start == n*n )	return;        
+        int x = start % n;
+        int y = start / n;
+        Qpoint[x][y] = true;
+        comb( start + 1 , n  , r - 1);
+        Qpoint[x][y] = false;     
+        comb( start + 1 , n  , r );
+
+       
+    }
+    
+}
