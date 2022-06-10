@@ -1,27 +1,33 @@
+//https://programmers.co.kr/learn/courses/30/lessons/12952
+//https://ddsiq.tistory.com/72
+import java.util.*;
 class Solution {
-    static boolean[][] Qpoint;
-    static int count = 0;
-    public int solution(int n) {
-        int answer = 0;
-        Qpoint = new boolean[n][n];
-        comb( 0, n , n );
-        System.out.println( count );
+    int[] Qpoint;
+    int answer = 0;
+    public int solution(int n) {        
+        Qpoint = new int[n];  
+        boolean[] chkQ = new boolean[n];
+        perm( chkQ , 0 , n );
         return answer;
-    }
-    static void comb( int start , int n , int r ){
-        if( r == 0 ){            
-            count++;         
+    }    
+    public void perm( boolean[] chkQ , int depth , int n ){
+        if( depth == n ) {
+            answer++;
             return;
         }
-        if( start == n*n )	return;        
-        int x = start % n;
-        int y = start / n;
-        Qpoint[x][y] = true;
-        comb( start + 1 , n  , r - 1);
-        Qpoint[x][y] = false;     
-        comb( start + 1 , n  , r );
-
-       
-    }
-    
+        for( int i = 0 ; i < n ; i++ ){
+            if( !chkQ[i] ){
+                chkQ[i] = true;
+                Qpoint[depth] = i;
+                if( isCorrect( depth ) ) perm( chkQ , depth + 1 , n );
+                chkQ[i] = false;
+            }
+        }
+    }   
+    public boolean isCorrect( int current_idx ){
+        for( int i = 0 ; i < current_idx ; i++ ){            
+            if( Math.abs( i - current_idx ) == Math.abs( Qpoint[i] - Qpoint[current_idx] ) ) return false;
+        }
+        return true;
+    }    
 }
