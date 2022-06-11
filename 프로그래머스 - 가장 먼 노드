@@ -1,0 +1,45 @@
+//https://programmers.co.kr/learn/courses/30/lessons/49189
+import java.util.*;
+
+class Solution {
+    static ArrayList<Integer>[] graph;
+    static int[] dist;
+    static boolean[] visited;
+    public int solution(int n, int[][] edge) {
+        int answer = 0;
+        graph = new ArrayList[ n + 1 ];
+        dist = new int[ n + 1 ];       
+        visited = new boolean[ n + 1 ];
+        for( int i = 1 ; i <= n ; i++ ){
+            graph[i] = new ArrayList<>();
+        }
+        for( int i = 0 ; i < edge.length ; i++ ){
+            graph[ edge[i][0] ].add( edge[i][1] );
+            graph[ edge[i][1] ].add( edge[i][0] );
+        } 
+        bfs();
+        Arrays.sort( dist );
+        int max = dist[ dist.length - 1 ];        
+        for( int i = 0 ; i < dist.length ; i++ ){
+            if( dist[i] == max ) answer++;
+        }
+        return answer;
+    }
+    public void bfs(){
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer( 1 );
+        visited[1] = true;
+        while( !queue.isEmpty() ){
+            int curNode = queue.poll();
+            ArrayList<Integer> node = graph[curNode];
+            for( int i : node ){
+                if( !visited[ i ] ){
+                    visited[ i ] = true;
+                    dist[i] = dist[ curNode ] + 1 ;
+                    queue.add( i );                       
+                }
+            }
+            
+        }
+    }
+}
