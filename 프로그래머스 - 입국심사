@@ -1,0 +1,32 @@
+//https://programmers.co.kr/learn/courses/30/lessons/43238
+/https://ddsiq.tistory.com/74
+
+import java.util.*;
+class Solution {
+    public long solution(int n, int[] times) {
+        long answer = 0;
+        Arrays.sort( times );
+        long start = 1;
+        long end = (long)times[times.length - 1] * n; 
+        long mid = 0;
+        
+        while( start <= end ){
+            mid = ( start + end ) / 2; // 총 추정시간( 모든 사람이 심사를 받는데 걸리는 시간 )
+            long sum = 0;
+            for( int time : times ){                
+                sum += mid / time; 
+                // ( mid / time ) >> 각 심사관이 맡을 수 있는 입국심사자 수
+                // 즉 sum 은 심사관들이 심사를 완료한 입국심사자의 총 수가 된다.
+            }
+            
+            // 심사관이 모든 입국심사자수를 검사하지 못했다는 뜻. 즉 추정시간이 더 오래 걸려야 한다.
+            if( sum < n ){  
+                start = mid + 1;
+            } else {
+                end = mid - 1 ;
+                answer = mid;
+            }            
+        }        
+        return answer;
+    }
+}
