@@ -1,0 +1,25 @@
+//https://programmers.co.kr/learn/courses/30/lessons/12936
+import java.util.*;
+class Solution {
+    public int[] solution(int n, long k) {
+        int[] answer = new int[ n ];
+        List<Integer> nums = new LinkedList<>();
+        for( int i = 1 ; i <= n ; i++ ){
+            nums.add( i );
+        }
+        k = k - 1 ;
+        int idx;
+        for( int i = 0 ; i < n - 2 ; i++ ){
+            int div = ( n - i - 1 ) * ( n - i - 2 );
+            idx = (int)( k / div )  ;
+            answer[i] = nums.get(idx);
+            nums.remove(idx);    
+            k = k % div ;
+        }
+        answer[ n - 2 ] =  nums.get(k);
+            nums.remove( k );
+        answer[ n - 1 ] =  nums.get(0);
+            nums.remove( 0 );
+        return answer;
+    }
+}
