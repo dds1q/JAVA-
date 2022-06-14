@@ -1,0 +1,51 @@
+//https://programmers.co.kr/learn/courses/30/lessons/92342
+//https://ddsiq.tistory.com/76
+import java.util.*;
+
+class Solution {
+    static ArrayList<int[]> list = new ArrayList<>();
+    static int[] RYAN;
+    static int[] APEACH;    
+    static int max = Integer.MIN_VALUE;
+    public int[] solution(int n, int[] info) {        
+        int sum = 0;         
+        RYAN = new int[ info.length ];
+        APEACH = info.clone();
+        findCase( 0 , 0 , n );
+        if( list.isEmpty() ) return new int[]{-1};
+        Collections.sort(list, (o1, o2) -> {
+            for (int i = 10; i >= 0; i--) {
+                if (o1[i] != o2[i]) return o2[i] - o1[i];
+            }
+            return 0;
+        });
+        return list.get(0);
+    }
+    static void findCase( int count , int s , int n ){
+        if( count == n ) {
+            isRYAN_WIN();    
+            return;
+        }
+        for (int i = s; i < 11; i++) {
+            RYAN[i]++;
+            findCase( count + 1 , i , n );  
+            RYAN[i]--;
+        }
+    }    
+    static void isRYAN_WIN(){
+        int APEACH_score = 0;
+        int RYAN_score = 0;
+        for( int i = 0 ; i < RYAN.length ; i++ ){
+            if( APEACH[i] == 0 && RYAN[i] == 0 ) continue;
+            if( APEACH[i] >= RYAN[i] ) APEACH_score += 10 - i ;
+            else RYAN_score += 10 - i ;
+        }
+        if( RYAN_score > APEACH_score ){
+            if( RYAN_score - APEACH_score > max ){
+                max = RYAN_score - APEACH_score;
+                list.clear();
+                list.add( RYAN.clone() );
+            } else if ( RYAN_score - APEACH_score == max ) list.add( RYAN.clone() );            
+        }
+    }
+}
