@@ -1,0 +1,26 @@
+// https://programmers.co.kr/learn/courses/30/lessons/92335
+// https://ddsiq.tistory.com/77
+
+class Solution {
+    public int solution(int n, int k) {
+        int answer = 0;
+        String jinsu = Integer.toString( n , k );	// k진법의 문자열로 변환        
+        String[] nums = jinsu.split("0");	// 0 기준으로 문자열을 쪼갠다.   
+        for( int i = 0 ; i < nums.length ; i++ ){            
+            if( nums[i].equals("") ) continue;
+            if( isSosu( Long.parseLong( nums[i] ) ) ) answer++;
+        }        
+        return answer;
+    }
+    
+    // 10진법의 숫자가 소수인지 판별하는 함수
+    static boolean isSosu( long num ){
+        if( num == 1 ) return false; 	// 1은 소수가 아니므로 제외    
+        
+        //소수인지 판별
+        for( long i = 2 ; i <= Math.sqrt( num ) ; i++ ){
+            if( num % i == 0 )return false;
+        }
+        return true;
+    }
+}
