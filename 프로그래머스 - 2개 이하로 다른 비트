@@ -1,0 +1,22 @@
+//https://programmers.co.kr/learn/courses/30/lessons/77885
+//https://ddsiq.tistory.com/79
+class Solution {
+    public long[] solution(long[] numbers) {
+        long[] answer = new long[ numbers.length ];
+        for( int i = 0 ; i < numbers.length ; i++ ){
+            String bit = Long.toString( numbers[i] , 2 );
+            answer[i] = fx( bit , numbers[i] );
+        }
+        return answer;
+    }
+    static long fx( String bit , long num ){        
+        if( num % 2 == 0 ) return num + 1 ; 
+        else{
+            if( bit.indexOf( "0" ) == -1 ){
+                bit = "0" + bit;
+            } 
+            int n = bit.length() - 2 - bit.lastIndexOf("0");            
+            return num + (long)Math.pow( 2 , n );
+        }        
+    }
+}
