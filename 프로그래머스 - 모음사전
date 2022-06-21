@@ -1,0 +1,14 @@
+//https://programmers.co.kr/learn/courses/30/lessons/84512
+
+class Solution {
+    public int solution(String word) {
+        int answer = 0;
+        int sum = 156*5 + 1;
+        String dict = "AEIOU";
+        for( int i = 0 ; i < word.length() ; i++ ){
+            answer = answer + sum * dict.indexOf( word.charAt( i ) ) + 1;            
+            sum =  ( sum - 1 ) / 5;
+        }        
+        return answer;
+    }
+}
