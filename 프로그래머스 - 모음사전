@@ -1,4 +1,5 @@
 //https://programmers.co.kr/learn/courses/30/lessons/84512
+//https://ddsiq.tistory.com/80
 
 class Solution {
     public int solution(String word) {
@@ -6,8 +7,9 @@ class Solution {
         int sum = 156*5 + 1;
         String dict = "AEIOU";
         for( int i = 0 ; i < word.length() ; i++ ){
-            answer = answer + sum * dict.indexOf( word.charAt( i ) ) + 1;            
-            sum =  ( sum - 1 ) / 5;
+        	// dict.indexOf( word.charAt( i ) ) 는 알파벳 A,E,I,O,U 가 갖는 사전적 순서를 구해줌
+            answer = answer + sum * dict.indexOf( word.charAt( i ) ) + 1 ;            
+            sum =  ( sum - 1 ) / 5;	// word의 그다음 위치의 증가량
         }        
         return answer;
     }
