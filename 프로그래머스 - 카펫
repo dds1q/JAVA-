@@ -1,1 +1,25 @@
-//
+//https://programmers.co.kr/learn/courses/30/lessons/42842
+
+class Solution {
+    public int[] solution(int brown, int yellow) {
+        int[] answer = new int[2];
+        for( int i = 1 ; i <= yellow ; i++ ){
+            if( yellow % i == 0 ){
+                int m = ( yellow / i ) + 2;
+                int n = i + 2;
+                if( isCorrect(m , n , yellow , brown ) ){
+                    answer[0] = m;
+                    answer[1] = n;
+                    break;
+                }
+                
+            }
+        }        
+        return answer;
+    }
+    // 카펫의 가로,세로 길이가 조건에 맞는지 확인.
+    static boolean isCorrect( int x , int y , int yellow , int brown ){       
+        if( x * y - yellow == brown ) return true;
+        return false;
+    }
+}
