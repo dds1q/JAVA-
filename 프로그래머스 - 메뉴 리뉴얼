@@ -1,4 +1,5 @@
 //https://programmers.co.kr/learn/courses/30/lessons/72411
+//https://ddsiq.tistory.com/83
 
 import java.util.*;
 class Solution {
@@ -31,6 +32,7 @@ class Solution {
         }
         return answer;
     }
+    // 메뉴 후보 중 조합을 구해준다.
     static void comb( int depth , int start , int r , boolean[] visited , String r_course ){
         if( depth == r ){
             isCorrect( r_course );
@@ -42,6 +44,7 @@ class Solution {
             visited[i] = false;
         }
     }
+    // 가장 많이 함께 주문한 단품메뉴인지 확인.
     static void isCorrect( String r_course){
         int count = 0;
         for( int i = 0 ; i < orders_copy.length ; i++ ){
