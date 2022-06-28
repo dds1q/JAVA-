@@ -1,0 +1,66 @@
+//https://programmers.co.kr/learn/courses/30/lessons/72411
+
+import java.util.*;
+class Solution {
+    static int max = 0;
+    static String[] orders_copy;
+    static List<String> menu = new LinkedList<>();
+    static List<String> courses = new LinkedList<>();
+    static List<String> courses_imsi = new LinkedList<>();
+    public String[] solution(String[] orders, int[] course) {
+        orders_copy = orders.clone();       
+        for( int i = 0 ; i < orders.length ; i++ ){
+            for( int j = 0 ; j < orders[i].length() ; j++ ){
+                if( menu.indexOf( "" + orders[i].charAt(j) ) == -1 ) menu.add( orders[i].charAt(j) +"" );
+            }
+        }
+        Collections.sort( menu );
+        boolean[] visited = new boolean[ menu.size() ];
+        for( int i = 0 ; i < course.length ; i++ ){                       
+            comb( 0, 0 ,course[i] , visited , "" );            
+            for( String l : courses_imsi ){
+                courses.add( l );
+            }
+            courses_imsi.clear();    
+            max = 0;
+        }
+        Collections.sort( courses );
+        String[] answer = new String[ courses.size() ]; 
+        for( int i = 0 ; i < answer.length ; i++ ){
+            answer[i] = courses.get(i);
+        }
+        return answer;
+    }
+    static void comb( int depth , int start , int r , boolean[] visited , String r_course ){
+        if( depth == r ){
+            isCorrect( r_course );
+            return;
+        }
+        for( int i = start ; i < visited.length ; i++ ){            
+            visited[i] = true;                
+            comb( depth + 1 , i + 1 , r , visited , r_course + menu.get(i) );
+            visited[i] = false;
+        }
+    }
+    static void isCorrect( String r_course){
+        int count = 0;
+        for( int i = 0 ; i < orders_copy.length ; i++ ){
+            String order = orders_copy[i];
+            boolean chk = false;
+            for( int j = 0 ; j < r_course.length() ; j++ ){                
+                if( order.indexOf( r_course.charAt(j) +"" ) == -1 ){
+                    chk = true;
+                    break;
+                } 
+            }
+            if( !chk ) count++;            
+        }
+        if( count >= 2 ){
+            if( max < count ){                
+                max = count;
+                courses_imsi.clear();
+                courses_imsi.add( r_course );                
+            } else if ( max == count ) courses_imsi.add( r_course ); 
+        }        
+    }    
+}
