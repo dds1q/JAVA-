@@ -1,0 +1,15 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/12926
+class Solution {
+    public String solution(String s, int n) {        
+        char[] words = new char[ s.length() ];
+        for( int i = 0 ; i < s.length() ; i++ ){
+            char word = s.charAt(i);
+            if( word == ' ' ) words[i] = ' ';             
+            else if( word + n > 'z' ) words[i] = (char)('a' - 'z' + word - 1 + n ) ; 
+            else if( word + n > 'Z' && word <= 'Z' ) words[i] = (char)('A' - 'Z' + word - 1 + n ); 
+            else words[i] = (char)(word + n) ;            
+        }
+        
+        return new String( words );
+    }
+}
