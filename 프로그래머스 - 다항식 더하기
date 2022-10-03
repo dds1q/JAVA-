@@ -1,0 +1,30 @@
+class Solution {
+    public String solution(String polynomial) { 
+        String answer = "";
+        int x_num = 0;
+        int constant = 0;
+        String[] words = polynomial.split("\\+");
+        for( int i = 0 ; i < words.length ; i++ ){
+            String word = words[i].trim();
+            System.out.println( word );
+            if( word.endsWith("x") ){
+                if( word.length() == 1 ) x_num += 1;
+                else x_num += Integer.parseInt( word.substring( 0, word.length() - 1 ) );
+            }                                 
+            else constant += Integer.parseInt( word );
+        }
+
+        if ( x_num == 0 ) answer = String.valueOf( constant );
+        else if( constant == 0 ) {
+            if( x_num == 1 ) answer = "x";
+            else answer = x_num + "x";
+        }
+        else if ( constant == 0 && x_num == 0 ) answer = "0";
+        else {
+            if( x_num == 1 ) answer = "x + " + constant;
+            else answer =  x_num + "x + " + constant;
+        }
+
+        return answer;
+    }
+}
